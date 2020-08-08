@@ -149,6 +149,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '562962128088-p5bhrdmsdkbgcfc61ua1entai235f5si.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'INSERT_PROVIDED_SECRET_HERE'
-
-SOCIAL_AUTH_GITHUB_KEY = 'ca25842e6a1ea2d632d8'
-SOCIAL_AUTH_GITHUB_SECRET = '8cd47eb1e8cb9f63fe8ab34ccc456cc7a7eb04f8'
