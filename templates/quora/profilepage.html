@@ -1,0 +1,38 @@
+{% extends 'quora/base.html' %}
+{% block title %}Edit Profile | {{ block.super }}{% endblock %}
+{% block content %}
+	{% if user.profile.photo %}
+		<img src="{{ user.profile.photo.url }}" width="150" height="150">
+	{% else %}
+		<img src="/media/default.png" width="150" , height="150">
+	{% endif %}
+	
+	<pre><h2>Username : 		{{user.username}}</h2></pre>
+	<pre><h2>First Name :		{{user.first_name}}</h2></pre>
+	<pre><h2>Last Name : 		{{user.last_name}}</h2></pre>
+	<pre><h2>Date Of Birth : 	{{user.profile.dob}}</h2></pre>
+	<pre><h2>Email : 		{{user.email}}</h2></pre>
+	{% if request.user.is_authenticated %}
+		{% if request.user == user %}
+			<div style="padding-left: 600px">
+				<h3><a href="{% url 'quora:edit_profile' %}"><h4>Edit Profile</h4></a></h3>
+			</div>
+		{% endif %}
+	{% endif %}
+	<br><br><br>
+	<div>
+		<h2>Your Asked Questions</h2>
+		{% for q in questions %}
+			<div>
+				<h2><p><a href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
+				<pre><p>Author - {{q.author}}	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
+				<pre><p>Status - {{q.status}}</p></pre>
+				<p>Description - {{q.body}}</p>
+				<!-- <p>{{q.created}}</p> -->
+				<!-- <p>{{q.updated}}</p> -->
+			</div>
+			<br>
+		{% endfor %}
+	</div>
+
+{% endblock %}

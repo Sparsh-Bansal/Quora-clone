@@ -1,0 +1,48 @@
+{% load static %}
+{% load tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{% block title %}{% endblock %} 
+	</title>
+	<style type="text/css">
+		 .topcorner{
+		   position:absolute;
+		   top:50px;
+		   right:100px;
+		  }	
+	</style>
+</head>
+<body>
+	<h2><a href="{% url 'quora:ques_list' %}">Home Page</a></h2>
+	<br>
+	{% if request.user.is_authenticated %}
+		<div class="topcorner">
+			<h3>Hii <a href="{% url 'quora:profilepage' username=user.username %}">{{ request.user }}</a></h3>
+			{% if request.user.profile.photo %}
+				<a href="{% url 'quora:profilepage' username=user.username %}"><img src="{{ request.user.profile.photo.url }}" width="50" height="50"></a>
+			{% else %}
+				<a href="{% url 'quora:profilepage' username=user.username %}"><img src="/media/default.png" width="50" , height="50"></a>
+			{% endif %}
+			<a href="{% url 'quora:user_logout' %}"><h3>Logout</h3></a>
+		</div>
+	{% else %}
+		<div class="topcorner">
+			<a href="{% url 'quora:user_login' %}"><h3>Login</h3></a>
+			<a href="{% url 'quora:register' %}"><h3>Register</h3></a>
+		</div>
+	{% endif %}
+	<br><br>
+	{% if request.user.is_authenticated %}
+		<h2><a href="{% url 'quora:ask_question' %}">Ask New Question</a></h2>
+		<h2><a href="{% url 'quora:show_fav_ques' %}">Show Favourite Questions</a></h2>
+	<br>
+	<br>
+	<br>
+	<br>
+	{% endif %}
+	{% block content %}
+	{% endblock %}
+</body>
+</html>

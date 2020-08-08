@@ -1,0 +1,110 @@
+{% extends 'quora/base.html' %}
+{% load tags %}
+{% load tags%}
+{% block content %}
+
+<!-- {% block title %}{{q.title}}|{{block.super}}{% endblock %} -->
+
+<div>
+		<h2>Detail of the Question</h2>
+			<div>
+				<h2><p>Title : {{q.title}}</p></h2>
+				<pre><p>Author - <a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
+				<pre><p>Status - {{q.status}}</p></pre>
+				<p>Description - {{q.body}}</p>
+				<!-- <p>{{q.created}}</p> -->
+				<!-- <p>{{q.updated}}</p> -->
+			</div>
+			<br>
+			<p>{{ likes_count }} Likes</p>
+			<div>
+				<form action="{% url 'quora:ques_likes' %}" method="POST">
+					{% csrf_token %}
+					{% if is_liked %}
+						<button type="submit" name="q_id" value="{{ q.id }}">Dislike</button>
+					{% else %}
+						<button type="submit" name="q_id" value="{{ q.id }}">Like</button>
+					{% endif %}
+				</form>
+			</div>
+
+			<div>
+				<form action="{% url 'quora:ques_fav' %}" method="POST">
+					{% csrf_token %}
+					{% if is_favourite %}
+						<button type="submit" name="q_id" value="{{ q.id }}">Remove from favourite</button>
+					{% else %}
+						<button type="submit" name="q_id" value="{{ q.id }}">Add to favourite</button>
+					{% endif %}
+				</form>
+			</div>
+
+			<div>
+				{% if request.user == q.author %}
+					<div>
+						<a href="{% url 'quora:update_ques' q.id %}"><h3>Edit</h3></a>
+					</div>
+					<!-- <br> -->
+					<a href="{% url 'quora:delete_ques' q.id %}"><h3>Delete</h3></a>
+				{% endif %}
+			</div>
+	</div>
+	<br><br><br>
+	{% if not q.restrict_comments %}
+		<h4>Add your comment below :</h4>
+		<form method="POST">
+			{% csrf_token %}
+			{{ comment_form.as_p }}
+			<button type="submit" name="comment_id" value="{{comment.id}}">Comment</button>
+		</form>
+		<br><br>
+		<h4>{{ comments.count}} Comments</h4>
+		<div>
+			{% for comment in comments %}
+				<p>{{ comment.content }}</p>
+				<pre>by-{{comment.user}}        -- {{comment.timestamp}}</pre>
+					
+					{% if request.user == comment.user %}
+						<form action="{% url 'quora:delete_comment' q.id %}" method="POST">
+							{% csrf_token %}
+							<button type="submit" name="comment_id" value="{{comment.id}}">Delete</button>
+						</form>
+					{% endif %}
+
+				<br>
+				<div style="padding-left: 80px">
+						
+					<h4>Reply below :</h4>
+
+					<form method="POST" action="{% url 'quora:comment_reply' q.id %}">
+						{% csrf_token %}
+						<input type="text" name="text" value="">
+						<button type="submit" name="comment_id" value="{{comment.id}}">Reply</button>
+					</form>
+
+					<br><br>
+					<h4>{{ replies|count_reply:comment}} Replies</h4>
+					<div>
+						{% for reply in replies|in_category:comment %}
+							<p>{{ reply.content }}</p>
+							<pre>by-{{reply.user}}        -- {{reply.timestamp}}</pre>
+							<br>
+						{% if request.user == reply.user %}
+							<form action="{% url 'quora:delete_reply' q.id %}" method="POST">
+							{% csrf_token %}
+								<button type="submit" name="reply_id" value="{{reply.id}}">Delete</button>
+							</form>
+						{% endif %}
+						{% endfor %}
+					</div>
+
+				</div>
+
+				<br><br>
+			{% endfor %} 
+		</div>
+	{% else %}
+	<h6> Comments on this post is restricted </h6>
+	{% endif %}
+
+{% endblock %}

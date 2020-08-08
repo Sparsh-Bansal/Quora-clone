@@ -1,0 +1,8 @@
+<h2>Are you sure you want to delete {{ques.title}}</h2>
+<p>
+	<a href="{% url 'quora:ques_detail'  ques.id %}">Cancel</a>
+</p>
+<form method="POST">
+	{% csrf_token %}
+	<input type="submit" name="submit" value="Delete">
+</form>

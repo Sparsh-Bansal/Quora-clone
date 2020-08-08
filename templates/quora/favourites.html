@@ -1,0 +1,20 @@
+{% extends 'quora/base.html' %}
+{% block content %}
+
+{% block title %}{{block.super}}{% endblock %}
+<div>
+		<h2>Favourite Questions</h2>
+		{% for q in questions %}
+			<div>
+				<h2><p><a href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
+				<pre><p>Author - {{q.author}}	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
+				<pre><p>Status - {{q.status}}</p></pre>
+				<p>Description - {{q.body}}</p>
+				<!-- <p>{{q.created}}</p> -->
+				<!-- <p>{{q.updated}}</p> -->
+			</div>
+			<br>
+		{% endfor %}
+	</div>
+
+{% endblock %}
