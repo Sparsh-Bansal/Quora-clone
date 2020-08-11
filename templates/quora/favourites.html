@@ -3,7 +3,8 @@
 
 {% block title %}{{block.super}}{% endblock %}
 <div>
-		<h2>Favourite Questions</h2>
+		<h2 class="display-6">Favourite Questions</h2>
+		<hr class="my-4">
 		{% for q in questions %}
 			<div>
 				<h2><p><a href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
