@@ -47,15 +47,17 @@
 				</ul>
 				{% else %}
 					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a class="nav-link" href="{% url 'quora:user_login' %}">Login</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'quora:register' %}">Register</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'quora:user_login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'quora:register' %}"><i class="fas fa-user-plus"></i> Register</a></li>
 					</ul>
 				{% endif %}
 		</div>
 	</nav>
-	<div class="container">
-		{% block content %}
-		{% endblock %}
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container container-fluid">
+			{% block content %}
+			{% endblock %}
+		</div>
 	</div>
 	<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 	<script src="{% static 'scripts/app.js' %}"></script> 

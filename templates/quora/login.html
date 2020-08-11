@@ -1,12 +1,17 @@
 {% extends 'quora/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
+	<h1 class="display-5">Log In!</h1>
+	<hr class="my-4">
 	<form method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" name="submit" , value='Login'>
+		{{ form|crispy }}
+		<input type="submit" class="btn btn-primary mb-2" name="submit" , value='Login'>
 	</form>
 	<br>
-	<a href="{% url 'password_reset' %}">Forgotten Your password  </a>
+	<a class="align-middle" href="{% url 'password_reset' %}">Forgotten Your password?</a><br>
+	<h5 class="align-middle">OR</h5>
+	<a class="align-middle" href="{% url 'quora:register' %}">Create a new account!</a>
 	<!-- <div>
 		<h3>Login with :</h3>
 		<a href="{% url 'social:begin' 'google-oauth2' %}">

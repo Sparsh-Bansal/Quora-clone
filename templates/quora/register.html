@@ -1,9 +1,16 @@
 {% extends 'quora/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" name="submit" , value='Register'>
-	</form>
+<h1 class="display-5">Create a new account!</h1>
+<hr class="my-4">
+<br>
+<form method="POST">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<input type="submit" name="submit" class="btn btn-primary mb-2" value="Register">
+	<input type="reset" name="reset" class="btn btn-secondary mb-2" value="Reset">
+	<br>
+	<a href="{% url 'quora:user_login' %}">Or Log into an existing account!</a>
+</form>
 
 {% endblock %}
