@@ -3,47 +3,61 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="{% static 'styles/app.css' %}" type="text/css" />
 	<title>
 		{% block title %}{% endblock %} 
 	</title>
-	<style type="text/css">
-		 .topcorner{
-		   position:absolute;
-		   top:50px;
-		   right:100px;
-		  }	
-	</style>
 </head>
 <body>
-	<h1 style="padding-left: 600px">Quora Clone</h1>
-	<h2><a href="{% url 'quora:ques_list' %}">Home Page</a></h2>
-	<br>
-	{% if request.user.is_authenticated %}
-		<div class="topcorner">
-			<h3>Hii <a href="{% url 'quora:profilepage' username=user.username %}">{{ request.user }}</a></h3>
-			{% if request.user.profile.photo %}
-				<a href="{% url 'quora:profilepage' username=user.username %}"><img src="{{ request.user.profile.photo.url }}" width="50" height="50"></a>
-			{% else %}
-				<a href="{% url 'quora:profilepage' username=user.username %}"><img src="/media/default.png" width="50" , height="50"></a>
+	<nav class="navbar navbar-dark navbar-expand-md fixed-top">
+		<a class="navbar-brand" href="/">Quora Clone</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbar1">
+		  <ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'quora:ques_list' %}"><i class="fas fa-home"></i> Home</a>
+			</li>
+			{% if request.user.is_authenticated %}
+				<li class="nav-item"><a class="nav-link" href="{% url 'quora:ask_question' %}"><i class="fas fa-edit"></i> New Question</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'quora:show_fav_ques' %}"><i class="fas fa-star"></i> Favourites</a></li>
 			{% endif %}
-			<a href="{% url 'quora:user_logout' %}"><h3>Logout</h3></a>
+		  </ul>
+		  {% if request.user.is_authenticated %}
+				<ul class="nav navbar-nav navbar-right">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'quora:profilepage' username=user.username %}">
+							{% if request.user.profile.photo %}
+								<img src="{{ request.user.profile.photo.url }}" width="23" height="23" class="d-inline-block align-top" alt="profilePic">
+							{% else %}
+								<img src="/media/default.png" width="23" height="23" class="d-inline-block align-top" alt="profilePic">
+							{% endif %}
+							{{ request.user }}
+						</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'quora:user_logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+				</ul>
+				{% else %}
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item"><a class="nav-link" href="{% url 'quora:user_login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'quora:register' %}">Register</a></li>
+					</ul>
+				{% endif %}
 		</div>
-	{% else %}
-		<div class="topcorner">
-			<a href="{% url 'quora:user_login' %}"><h3>Login</h3></a>
-			<a href="{% url 'quora:register' %}"><h3>Register</h3></a>
-		</div>
-	{% endif %}
-	<br><br>
-	{% if request.user.is_authenticated %}
-		<h2><a href="{% url 'quora:ask_question' %}">Ask New Question</a></h2>
-		<h2><a href="{% url 'quora:show_fav_ques' %}">Show Favourite Questions</a></h2>
-	<br>
-	<br>
-	<br>
-	<br>
-	{% endif %}
-	{% block content %}
-	{% endblock %}
+	</nav>
+	<div class="container">
+		{% block content %}
+		{% endblock %}
+	</div>
+	<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+	<script src="{% static 'scripts/app.js' %}"></script> 
 </body>
 </html>

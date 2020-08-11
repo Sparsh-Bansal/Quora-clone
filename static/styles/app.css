@@ -1,0 +1,12 @@
+.navbar{
+    background-color: #2b0000;
+}
+
+#id{
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.container{
+    padding-top: 60px;
+}
