@@ -31,53 +31,49 @@
 </div>
 </div>
 <div>
-		<h2 class="display-6">Detail of the Question</h2>
-		<hr class="my-4">
-			<div>
-				<h2><p>Title : {{q.title}}</p></h2>
-				<pre><p>Author - <a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
-				<pre><p>Status - {{q.status}}</p></pre>
-				<p>Description - {{q.body}}</p>
-				<!-- <p>{{q.created}}</p> -->
-				<!-- <p>{{q.updated}}</p> -->
-			</div>
-			<br>
-			<p>{{ likes_count }} Likes</p>
-			<div>
-				<form action="{% url 'quora:ques_likes' %}" method="POST">
-					{% csrf_token %}
-					{% if is_liked %}
-						<button type="submit" name="q_id" value="{{ q.id }}">Dislike</button>
-					{% else %}
-						<button type="submit" name="q_id" value="{{ q.id }}">Like</button>
-					{% endif %}
-				</form>
-			</div>
-
-			<div>
-				<form action="{% url 'quora:ques_fav' %}" method="POST">
-					{% csrf_token %}
-					{% if is_favourite %}
-						<button type="submit" name="q_id" value="{{ q.id }}">Remove from favourite</button>
-					{% else %}
-						<button type="submit" name="q_id" value="{{ q.id }}">Add to favourite</button>
-					{% endif %}
-				</form>
-			</div>
-
-			<div>
-				{% if request.user == q.author %}
-					<div>
-						<a href="{% url 'quora:update_ques' q.id %}"><h3>Edit</h3></a>
-					</div>
-					<!-- <br> -->
-					<a href="{% url 'quora:delete_ques' q.id %}"><h3>Delete</h3></a>
-				{% endif %}
-			</div>
+	<h2 class="display-6">Detail of the Question</h2>
+	<hr class="my-4">
+	<div>
+		<h2><p>Title: {{q.title}}</p></h2>
+		<p><strong>Author: </strong><a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>
+		<span class="float-right">
+			<span class="badge badge-secondary">Created: {{q.created}}</span>
+			<span class="badge badge-secondary">Updated: {{q.updated}}</span>
+			<span style="text-transform: capitalize;" class="badge badge-secondary">{{q.status}}</span></p>
+		</span>
+		<h4>Description:</h4><h6>{{q.body}}</h6>
 	</div>
-	<br><br><br>
+	<hr class="my-4">
+	<div class="reaction">
+		<form action="{% url 'quora:ques_likes' %}" method="POST">
+			{% csrf_token %}
+			{% if is_liked %}
+				<button class="btn btn-danger" type="submit" name="q_id" value="{{ q.id }}"><i class="fas fa-thumbs-up"></i> Dislike <span class="badge badge-light">{{ likes_count }}</span></button>
+			{% else %}
+				<button class="btn btn-outline-danger" type="submit" name="q_id" value="{{ q.id }}"><i class="fa fa-thumbs-up"></i> Like <span class="badge badge-light">{{ likes_count }}</span></button>
+			{% endif %}
+		</form>
+		<form action="{% url 'quora:ques_fav' %}" method="POST">
+			{% csrf_token %}
+			{% if is_favourite %}
+				<button class="btn btn-warning" type="submit" name="q_id" value="{{ q.id }}"><i class="fas fa-star"></i> Remove from Favourites</button>
+			{% else %}
+				<button class="btn btn-outline-warning" type="submit" name="q_id" value="{{ q.id }}"><i class="fa fa-star"></i> Add to Favourites</button>
+			{% endif %}
+		</form>
+	</div>
+
+	<div class="reaction2">
+		{% if request.user == q.author %}
+			<a class="btn btn-outline-warning mb-2" href="{% url 'quora:update_ques' q.id %}"><i class="fas fa-edit"></i> Edit</a>
+			<!-- <br> -->
+			<a class="btn btn-outline-danger mb-2" href="{% url 'quora:delete_ques' q.id %}"><i class="fas fa-trash"></i> Delete</a>
+		{% endif %}
+	</div>
+</div>
+<hr class="my-4">
 	{% if not q.restrict_comments %}
-		<h4>Add your comment below :</h4>
+		<h4>Add your comment below:</h4>
 		<form method="POST">
 			{% csrf_token %}
 			{{ comment_form|crispy }}

@@ -36,7 +36,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['dob','photo']
+        fields = ['DOB','photo']
 
 
 class QuestionAskForm(forms.ModelForm):

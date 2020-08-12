@@ -7,7 +7,8 @@
 		{% csrf_token %}
 		{{ user_form|crispy }}
 		{{ profile_form|crispy }}
-		<input type="submit" name="submit" , value='Edit'>
+		<input type="submit" class="btn btn-primary mb-2" name="submit" value="Save Changes!">
+		<a class="btn btn-secondary mb-2" href="{% url 'quora:profilepage' username=user.username %}">Discard Changes!</a>
 	</form>
 
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block commentreply %}
 	sparsh
-	<h4>Reply below :</h4>
+	<h4>Reply below:</h4>
 	<form method="POST" action="{% url 'quora:comment_reply' comment.id %}">
 		{% csrf_token %}
 		{{ reply_form|crispy }}

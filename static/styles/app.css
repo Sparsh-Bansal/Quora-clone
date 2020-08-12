@@ -10,3 +10,17 @@
 .container{
     padding-top: 77px;
 }
+
+.reaction{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.reaction form{
+    padding-right: 5px;
+    padding-bottom: 15px;
+}
+
+.btn-outline-warning{
+    color: orange;
+}
