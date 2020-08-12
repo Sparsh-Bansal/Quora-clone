@@ -1,38 +1,59 @@
 {% extends 'quora/base.html' %}
 {% block title %}Edit Profile | {{ block.super }}{% endblock %}
 {% block content %}
-	{% if user.profile.photo %}
-		<img src="{{ user.profile.photo.url }}" width="150" height="150">
-	{% else %}
-		<img src="/media/default.png" width="150" , height="150">
-	{% endif %}
-	
-	<pre><h2>Username : 		{{user.username}}</h2></pre>
-	<pre><h2>First Name :		{{user.first_name}}</h2></pre>
-	<pre><h2>Last Name : 		{{user.last_name}}</h2></pre>
-	<pre><h2>Date Of Birth : 	{{user.profile.dob}}</h2></pre>
-	<pre><h2>Email : 		{{user.email}}</h2></pre>
-	{% if request.user.is_authenticated %}
-		{% if request.user == user %}
-			<div style="padding-left: 600px">
-				<h3><a href="{% url 'quora:edit_profile' %}"><h4>Edit Profile</h4></a></h3>
-			</div>
-		{% endif %}
-	{% endif %}
-	<br><br><br>
+    <div class="row my-2">
+		<div class="col-lg-4 order-lg-1 text-center">
+			{% if user.profile.photo %}
+				<img src="{{ user.profile.photo.url }}" class="mx-auto img-fluid img-circle d-block" alt="avatar" width="150" height="150">
+			{% else %}
+				<img src="/media/default.png" class="mx-auto img-fluid img-circle d-block" alt="avatar" width="150" , height="150">
+			{% endif %}
+            {% if request.user.is_authenticated %}
+				{% if request.user == user %}
+					<a class="btn btn-secondary mb-2" href="{% url 'quora:edit_profile' %}">Edit Profile</a>
+				{% endif %}
+			{% endif %}
+        </div>
+        <div class="col-lg-8 order-lg-2">
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+					<h6>@{{user.username}}</h6>
+                    <h2 class="mb-3">{{user.first_name}} {{user.last_name}}</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+							<p><strong>Date Of Birth: </strong>{{user.profile.dob}}</p>
+							<p><strong>E-Mail: </strong>{{user.email}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<hr class="my-4">
+	<hr class="my-4">
 	<div>
-		<h2>Your Asked Questions</h2>
+		<h2 class="display-6">Your Asked Questions</h2>
+		<hr class="my-4">
 		{% for q in questions %}
 			<div>
-				<h2><p><a href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
-				<pre><p>Author - {{q.author}}	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
-				<pre><p>Status - {{q.status}}</p></pre>
-				<p>Description - {{q.body}}</p>
-				<!-- <p>{{q.created}}</p> -->
-				<!-- <p>{{q.updated}}</p> -->
+				<h2><p><a style="color: black;" href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
+				<p><strong>Author: </strong><a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>
+					<span class="float-right">
+						<span class="badge badge-secondary">Created: {{q.created}}</span>
+						<span class="badge badge-secondary">Updated: {{q.updated}}</span>
+						<span style="text-transform: capitalize;" class="badge badge-secondary">{{q.status}}</span></p>
+					</span>
+				</p>
+				<h4>Description:</h4><h6>{{q.body}}</h6>
 			</div>
 			<br>
+			<hr class="my-4">
 		{% endfor %}
 	</div>
-
+	<br>
+	<br>
+	<blockquote class="blockquote text-center">
+		<p class="mb-0">** That's it! **</p>
+		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
+	</blockquote>
 {% endblock %}

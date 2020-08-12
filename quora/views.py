@@ -218,7 +218,7 @@ def edit_profile(request):
             user_form.save()
             profile_form.save()
 
-        return HttpResponseRedirect(reverse('quora:ques_list'))
+        return HttpResponseRedirect(reverse('quora:profilepage',args=(request.user.username,)))
 
     else:
         user_form = UserUpdateForm(instance=request.user)

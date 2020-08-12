@@ -7,15 +7,24 @@
 		<hr class="my-4">
 		{% for q in ques %}
 			<div>
-				<h2><p><a href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
-				<pre><p>Author - <a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>	Created_on - {{q.created}}	Updated_on - {{q.updated}}</p></pre>
-				<pre><p>Status - {{q.status}}</p></pre>
-				<p>Description - {{q.body}}</p>
-				<!-- <p>{{q.created}}</p> -->
-				<!-- <p>{{q.updated}}</p> -->
+				<h2><p><a style="color: black;" href="{% url 'quora:ques_detail' q.id %}">{{q.title}}</a></p></h2>
+				<p><strong>Author: </strong><a href="{% url 'quora:profilepage' q.author %}">{{q.author}}</a>
+					<span class="float-right">
+						<span class="badge badge-secondary">Created: {{q.created}}</span>
+						<span class="badge badge-secondary">Updated: {{q.updated}}</span>
+						<span style="text-transform: capitalize;" class="badge badge-secondary">{{q.status}}</span></p>
+					</span>
+				</p>
+				<h4>Description:</h4><h6>{{q.body}}</h6>
 			</div>
 			<br>
+			<hr class="my-4">
 		{% endfor %}
 	</div>
-
+	<br>
+	<br>
+	<blockquote class="blockquote text-center">
+		<p class="mb-0">** That's it! **</p>
+		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
+	</blockquote>
 {% endblock %}
