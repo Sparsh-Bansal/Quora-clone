@@ -311,8 +311,6 @@ def delete_ques(request,id):
         'ques' : ques
     }
 
-    return render(request,'quora/delete_ques.html',context)
-
 
 
 def delete_comment(request,id):
