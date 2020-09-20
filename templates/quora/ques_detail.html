@@ -79,61 +79,61 @@
 	{% if not q.restrict_comments %}
 		<h4>{{ comments.count}} Comments</h4>
 		<hr class="my-4">
-		<div class="media">
 			{% for comment in comments %}
-			<img style="background-color: inherit;" class="mr-3" height="30" width="30" src="{% static 'comments.png' %}" alt="Generic placeholder image">
-			<div class="media-body">
-				<h5 class="mt-0">
-					<p><strong>@</strong><a href="{% url 'quora:profilepage' comment.user %}">{{comment.user}}</a>
-						<span class="float-right">{{comment.timestamp}}</span>
-					</p>
-				</h5>
-				<p>
-					{{ comment.content }}
-					{% if request.user == comment.user %}
-						<form action="{% url 'quora:delete_comment' q.id %}" method="POST">
-							{% csrf_token %}
-							<button class="btn btn-outline-danger btn-sm" type="submit" name="comment_id" value="{{comment.id}}"><i class="fas fa-trash"></i> Delete</button>
-						</form>
-					{% endif %}
-				</p>
-				<br>
-				<h4>{{ replies|count_reply:comment}} Replies</h4>
-				{% for reply in replies|in_category:comment %}
-					<div class="media mt-3">
-						<p class="pr-3" href="#">
-							<img style="background-color: inherit;" src="{% static 'comments.png' %}" height="30" width="30" alt="Generic placeholder image">
+			<div class="media">
+				<img style="background-color: inherit;" class="mr-3" height="30" width="30" src="{% static 'comments.png' %}" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">
+						<p><strong>@</strong><a href="{% url 'quora:profilepage' comment.user %}">{{comment.user}}</a>
+							<span class="float-right">{{comment.timestamp}}</span>
 						</p>
-						
-						<div class="media-body">
-							<h5 class="mt-0">
-								<p><strong>@</strong><a href="{% url 'quora:profilepage' reply.user %}">{{reply.user}}</a>
-									<span class="float-right">{{comment.timestamp}}</span>
-								</p>
-							</h5>
-							<p>{{ reply.content }}</p>
-							<br>
-							{% if request.user == reply.user %}
-								<form action="{% url 'quora:delete_reply' q.id %}" method="POST">
+					</h5>
+					<p>
+						{{ comment.content }}
+						{% if request.user == comment.user %}
+							<form action="{% url 'quora:delete_comment' q.id %}" method="POST">
 								{% csrf_token %}
-									<button class="btn btn-outline-danger btn-sm" type="submit" name="reply_id" value="{{reply.id}}"><i class="fas fa-trash"></i> Delete</button>
-								</form>
-							{% endif %}
+								<button class="btn btn-outline-danger btn-sm" type="submit" name="comment_id" value="{{comment.id}}"><i class="fas fa-trash"></i> Delete</button>
+							</form>
+						{% endif %}
+					</p>
+					<br>
+					<h4>{{ replies|count_reply:comment}} Replies</h4>
+					{% for reply in replies|in_category:comment %}
+						<div class="media mt-3">
+							<p class="pr-3" href="#">
+								<img style="background-color: inherit;" src="{% static 'comments.png' %}" height="30" width="30" alt="Generic placeholder image">
+							</p>
+							
+							<div class="media-body">
+								<h5 class="mt-0">
+									<p><strong>@</strong><a href="{% url 'quora:profilepage' reply.user %}">{{reply.user}}</a>
+										<span class="float-right">{{comment.timestamp}}</span>
+									</p>
+								</h5>
+								<p>{{ reply.content }}</p>
+								<br>
+								{% if request.user == reply.user %}
+									<form action="{% url 'quora:delete_reply' q.id %}" method="POST">
+									{% csrf_token %}
+										<button class="btn btn-outline-danger btn-sm" type="submit" name="reply_id" value="{{reply.id}}"><i class="fas fa-trash"></i> Delete</button>
+									</form>
+								{% endif %}
+							</div>
 						</div>
-					</div>
-				{% endfor %}
-				<br>
-				<form class="form-inline" method="POST" action="{% url 'quora:comment_reply' q.id %}">
-					{% csrf_token %}
-					<div class="form-group mx-sm-3 mb-2">
-						<input class="form-control" type="text" placeholder="Reply!" name="text" value="">
-					</div>
-					<button class="btn btn-outline-primary mb-2" type="submit" name="comment_id" value="{{comment.id}}"><i class="fas fa-comment"></i> Reply</button>
-				</form>
-				<br>
+					{% endfor %}
+					<br>
+					<form class="form-inline" method="POST" action="{% url 'quora:comment_reply' q.id %}">
+						{% csrf_token %}
+						<div class="form-group mx-sm-3 mb-2">
+							<input class="form-control" type="text" placeholder="Reply!" name="text" value="">
+						</div>
+						<button class="btn btn-outline-primary mb-2" type="submit" name="comment_id" value="{{comment.id}}"><i class="fas fa-comment"></i> Reply</button>
+					</form>
+					<br>
+				</div>
 			</div>
 			{% endfor %} 
-		</div>
 		<h4>Add your comment below:</h4>
 		<form method="POST">
 			{% csrf_token %}
