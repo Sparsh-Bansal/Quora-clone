@@ -149,5 +149,5 @@ LOGIN_REDIRECT_URL = 'quora:ques_list'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '562962128088-p5bhrdmsdkbgcfc61ua1entai235f5si.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'INSERT_PROVIDED_SECRET_HERE'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '562962128088-tp2pjoernl1tpcl668ivkigl44itb10e.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'cUEQciBgyMt-acyeXJnl84GF'
