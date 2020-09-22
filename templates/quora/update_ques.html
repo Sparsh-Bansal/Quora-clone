@@ -1,8 +1,11 @@
 {% extends 'quora/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
+	<h1 class="display-5">Edit this question</h1>
+	<hr class="my-4">
 	<form method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{ form|crispy}}
 		<input type="submit" name="submit" , value='Update'>
 	</form>
 
