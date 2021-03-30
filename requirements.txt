@@ -6,7 +6,7 @@ cffi==1.14.0
 chardet==3.0.4
 cryptography==3.0
 defusedxml==0.7.0rc1
-Django==3.0.8
+Django==3.0.12
 django-crispy-forms==1.9.2
 Faker==4.1.1
 idna==2.10
